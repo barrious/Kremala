@@ -1,0 +1,10 @@
+*.class
+*.jar
+*.war
+# VS Code files
+.vscode/
+# Binaries
+bin/
+# OS generated files
+.DS_Store
+Thumbs.db
