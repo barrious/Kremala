@@ -18,6 +18,9 @@ public class Kremala{
             boolean letter_found = false;
             System.out.print("Μάντεψε το γράμμα: ");
             given_letter = scanner.nextLine().toUpperCase();
+            if (!isValidInput(given_letter)) {
+                continue;
+            }
             if (typedLetters.contains(String.valueOf(given_letter))){
                         System.out.println("Έχεις ήδη δώσει το γράμμα αυτό!");
                         continue;
@@ -52,5 +55,22 @@ public class Kremala{
             System.out.println("Η σωστή λέξη είναι: " + lexi);
         }
         scanner.close();
+    }
+    public static boolean isValidInput(String input){
+        if (input.isEmpty()) {
+            System.out.println("Δεν έγραψες κάτι. Ξαναπροσπάθησε!");
+            return false;
+        } else if (input.length()>1){
+            System.out.println("Έγραψες περισσότερα από ένα γράμματα. Ξαναπροσπάθησε!");
+            return false;
+        } 
+        char c = input.charAt(0);
+        if (!Character.isLetter(c)) {
+            System.out.println("Αυτό δεν είναι γράμμα! Δώσε έναν χαρακτήρα από το Α-Ω.");
+            return false;
+          }
+        else {
+            return true;
+        }
     }
 }
