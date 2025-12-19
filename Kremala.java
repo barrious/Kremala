@@ -6,24 +6,29 @@ public class Kremala{
         int maximum_mistakes = 5;
         int mistakes_done = 0;
         String given_letter ="";
-        String lexi = "program";  
+        String lexi = "PROGRAM";  
         String[] lexi_pinakas = lexi.split("");  // Μετατροπή της λέξης σε array χαρακτήρων,
                                                        // αποτελούμενο από τα γράμματά της, για καλύτερο έλεγχο.
         boolean[] letters_found = new boolean[lexi_pinakas.length];//Δημιουργία πίνακα, στον οποίο κάθε γράμμα αντικαθίσταται από μια boolean τιμή,
                                                                     //ανάλογ από το αν έχει βρεθεί (true) ή όχι (false). Αρχικά όλες είναι false.
-
+        String typedLetters = "";
 
         System.out.printf("Θέλεις να παίξουμε κρεμάλα; \nΜόνο πρόσεξε διότι έχεις δυνατότητα για %d λάθη.%n", maximum_mistakes);
         System.out.printf("Η λέξη που πρέπει να μαντέψεις έχει %d γράμματα.\n", lexi_pinakas.length);
         while (mistakes_done<maximum_mistakes) {
             boolean letter_found = false;
             System.out.print("Μάντεψε το γράμμα: ");
-            given_letter = scanner.nextLine();
+            given_letter = scanner.nextLine().toUpperCase();
+            if (typedLetters.contains(String.valueOf(given_letter))){
+                        System.out.println("Έχεις ήδη δώσει το γράμμα αυτό!");
+                        continue;
+                } 
+            typedLetters += given_letter;
             for (int i = 0; i < lexi_pinakas.length; i++) {
                 if (given_letter.equals(lexi_pinakas[i])) {
                     letters_found[i] = true;
                     letter_found = true;
-                    System.out.printf("Το γράμμα %s βρίσκεται στην %d θέση της λέξης.\n",given_letter, i+1);
+                    System.out.printf("Το γράμμα %s βρίσκεται στην %d θέση της λέξης.\n", given_letter, i + 1);
                 }
             }
             if (letter_found == false) {
