@@ -28,15 +28,21 @@ public class Kremala{
             typedLetters += given_letter;
             for (int i = 0; i < lexi_pinakas.length; i++) {
                 if (given_letter.equals(lexi_pinakas[i])) {
+                    if (!letter_found) {
+                        System.out.printf("Το γράμμα %s βρίσκεται στην %d θέση της λέξης: ", given_letter, i + 1);
+                    }else{
+                        System.out.printf("\nΕπίσης βρίσκεται και στην στην %d θέση της λέξης: ", i + 1);
+                    }
                     letters_found[i] = true;
                     letter_found = true;
-                    System.out.printf("Το γράμμα %s βρίσκεται στην %d θέση της λέξης.\n", given_letter, i + 1);
                 }
             }
             if (letter_found == false) {
                 mistakes_done += 1;
                 System.out.printf("Ουπς, το γράμμα %s δεν υπάρχει. Λάθη που απομένουν : %s %n", given_letter, maximum_mistakes - mistakes_done);
             }
+
+            printCurrentProgress(lexi_pinakas, letters_found);//Δείχνω στον χρήστη, την λέξη με ευρεθέντα και άγνωστα γράμματα.
 
             boolean allFound = true; // Υποθέτουμε ότι βρέθηκαν όλα και ψάχνουμε για μία διάψευση (false)
             for (int i = 0; i < letters_found.length; i++) {
@@ -73,4 +79,17 @@ public class Kremala{
             return true;
         }
     }
+
+    public static void printCurrentProgress(String[] lexi_pinakas, boolean[] letters_found){
+        //String[] alreadyfound;
+        for (int i = 0; i < lexi_pinakas.length; i++) {
+            if (letters_found[i]) {
+                System.out.print(" " + lexi_pinakas[i] + " ");
+            } else {
+                System.out.print(" _ ");
+            }
+        }
+        System.out.println("");
+    }
+
 }
