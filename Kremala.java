@@ -18,6 +18,7 @@ public class Kremala{
             boolean letter_found = false;
             System.out.print("Μάντεψε το γράμμα: ");
             given_letter = scanner.nextLine().toUpperCase();
+
             if (!isValidInput(given_letter)) {
                 continue;
             }
@@ -26,25 +27,16 @@ public class Kremala{
                         continue;
                 } 
             typedLetters += given_letter;
-            for (int i = 0; i < lexi_pinakas.length; i++) {
-                if (given_letter.equals(lexi_pinakas[i])) {
-                    if (!letter_found) {
-                        System.out.printf("Το γράμμα %s βρίσκεται στην %d θέση της λέξης: ", given_letter, i + 1);
-                    }else{
-                        System.out.printf("\nΕπίσης βρίσκεται και στην στην %d θέση της λέξης: ", i + 1);
-                    }
-                    letters_found[i] = true;
-                    letter_found = true;
-                }
-            }
-            if (letter_found == false) {
-                mistakes_done += 1;
-                System.out.printf("Ουπς, το γράμμα %s δεν υπάρχει. Λάθη που απομένουν : %s %n", given_letter, maximum_mistakes - mistakes_done);
+            boolean found = updateGameState(lexi_pinakas, letters_found, given_letter);// Καλώ τη μέθοδο και αποθηκεύω την απάντηση
+            if (!found) {// Αν ΔΕΝ βρέθηκε το γράμμα, τότε μόνο αυξάνεις τα λάθη στη main
+            mistakes_done++;
+            System.out.printf("Ουπς, το γράμμα %s δεν υπάρχει. Λάθη που απομένουν: %d%n", 
+                given_letter, maximum_mistakes - mistakes_done);
             }
 
             printCurrentProgress(lexi_pinakas, letters_found);//Δείχνω στον χρήστη, την λέξη με ευρεθέντα και άγνωστα γράμματα.
 
-            boolean allFound = true; // Υποθέτουμε ότι βρέθηκαν όλα και ψάχνουμε για μία διάψευση (false)
+            boolean allFound = true; // Υποθέτω ότι βρέθηκαν όλα και ψάχνουμε για μία διάψευση (false)
             for (int i = 0; i < letters_found.length; i++) {
                 if (!letters_found[i]) { // Αν οποιαδήποτε θέση δεν έχει βρεθεί οπότε και η τιμή της είναι ακόμη false.
                 allFound = false;
@@ -92,4 +84,20 @@ public class Kremala{
         System.out.println("");
     }
 
+    public static boolean updateGameState(String[] lexi_pinakas, boolean[] letters_found, String given_letter) {
+    boolean foundAtLeastOne = false; // Τοπική μεταβλητή για να ξέρω αν βρέθηκε κάτι σε αυτόν τον γύρο
+    
+    for (int i = 0; i < lexi_pinakas.length; i++) {
+        if (given_letter.equals(lexi_pinakas[i])) {
+            if (!foundAtLeastOne) {
+                System.out.printf("Το γράμμα %s βρίσκεται στην %d θέση της λέξης.%n", given_letter, i + 1);
+            } else {
+                System.out.printf("Επίσης βρίσκεται και στην %d θέση της λέξης.%n", i + 1);
+            }
+            letters_found[i] = true;
+            foundAtLeastOne = true;
+        }
+    }
+    return foundAtLeastOne; // Επιστρέφω το αποτέλεσμα στη main
+}
 }
